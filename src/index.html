@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+    <title>Electron Player</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.min.css">
+    <link rel="stylesheet" href="./index.css">
+
+    <script type="text/javascript" src="./index.js" />
+    <script>
+      if ('require' in window) {
+        window.$ = window.jQuery = require('jquery');
+      }
+    </script>
+  </head>
+  <body>
+
+    <div id="pageContainer">
+      <input id="fileInput" name="fileInput" type="file" />
+      <div id="labelContainer">
+        <h2 id="labelDnD">Drag and drop</h2>
+        <br>
+        <h2 id="labelOr">Or click to update</h2>
+        <br>
+        <label for="fileInput" title="Open file">
+          <i class="fi-upload"></i>
+        </label>
+      </div>
+      <div id="videoContainer"></div>
+      <div id="statusMessage"></div>
+    </div>
+
+
+  </body>
+</html>

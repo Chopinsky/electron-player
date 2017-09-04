@@ -1,0 +1,88 @@
+body {
+  background-color: #323A45;
+  color: #eee;
+  font-family: "Oswald", sansSerif;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+
+label {
+  border-bottom-width: 10px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(26, 105, 94, 0.7969);
+  background-color: rgba(31, 187, 166, 0.75);
+  box-shadow: 0 10px 5px rgba(27, 39, 35, 0.39);
+  font-size: 60px;
+  padding: 20px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+label:hover {
+  background-color: rgba(31, 187, 166, 0.9);
+}
+
+video {
+  height: 100%;
+  width: 100%;
+}
+
+.onDragOver {
+  opacity: 0.75;
+  background-color: #2F4460;
+}
+
+#pageContainer {
+  text-align: left;
+}
+
+#labelContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -135px;
+  margin-left: -25px;
+}
+
+#labelDnD {
+  display: inline-block;
+  margin-left: -30px;
+}
+
+#labelOr {
+  display: inline-block;
+  margin-top: 0px;
+  margin-left: -55px;
+  padding-bottom: 10px;
+}
+
+#fileInput {
+  width: 0;
+  outline-width: 0;
+  display: none;
+}
+
+#videoContainer {
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+#statusMessage {
+  position: absolute;
+  min-height: 100%;
+  min-width: 100%;
+  padding-top: 25%;
+  z-index: -2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 60px;
+  text-align: center;
+}
