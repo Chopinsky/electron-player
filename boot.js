@@ -21,13 +21,18 @@ const createWindow = () => {
     "backgroundColor": config.background || "#585858"
   });
 
-  mainWindow.loadURL(url.format({
-    "pathname": path.join(__dirname, 'src-v1', 'index.html'),
-    "protocol": 'file:',
-    "slashes": true
-  }));
+  if (process.env.PROD) {
+    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.webContents.openDevTools();
+  } else {
+    mainWindow.loadURL(url.format({
+      // "pathname": path.join(__dirname, 'src-v1', 'index.html'),
+      "pathname": path.join(__dirname, 'build', 'index.html'),
+      "protocol": 'file:',
+      "slashes": true
+    }));
+  }
 
-  mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null);
 
   mainWindow.on('resize', () => {
