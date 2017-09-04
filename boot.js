@@ -22,7 +22,7 @@ const createWindow = () => {
   });
 
   mainWindow.loadURL(url.format({
-    "pathname": path.join(__dirname, 'src', 'index.html'),
+    "pathname": path.join(__dirname, 'src-v1', 'index.html'),
     "protocol": 'file:',
     "slashes": true
   }));

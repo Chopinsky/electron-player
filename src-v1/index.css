@@ -58,6 +58,8 @@ video {
   top: 0px;
   left: 0px;
   z-index: 9;
+  width: 100%    !important;
+  height: 100%   !important;
 }
 
 #labelContainer {

@@ -25,11 +25,6 @@ var fileCheck = (fileInput) => {
     alert("Can't open empty file.");
     return false;
   }
-  // The check below seems not necessary.
-  // } else if (~~fileInput.size > FILE_SIZE_LIMIT) {
-  //   alert("File is too large.");
-  //   return false;
-  // }
 
   return true;
 }
@@ -43,12 +38,12 @@ var playVideo = (fileInput) => {
   // remove old content first
   $('#videoContainer').empty();
 
-  var reader = new FileReader();  
+  var reader = new FileReader();
   reader.onload = (event) => {
     // insert new content
     var videoPlayer = `
       <div id='videoClose' class='nodisp fi-x'></div>
-      <video id='videoPlayer' autoplay controls height='100%' width='100%'
+      <video id='videoPlayer' autoplay controls
              src='${fileInput.path}' type='video/${extension}'>
         <p>Your browser doesn't support HTML5</p>
       </video>
