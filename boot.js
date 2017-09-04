@@ -27,7 +27,7 @@ const createWindow = () => {
     "slashes": true
   }));
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null);
 
   mainWindow.on('resize', () => {

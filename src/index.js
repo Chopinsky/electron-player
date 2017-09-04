@@ -25,6 +25,7 @@ var fileCheck = (fileInput) => {
     alert("Can't open empty file.");
     return false;
   }
+  // The check below seems not necessary.
   // } else if (~~fileInput.size > FILE_SIZE_LIMIT) {
   //   alert("File is too large.");
   //   return false;
@@ -36,7 +37,7 @@ var fileCheck = (fileInput) => {
 var playVideo = (fileInput) => {
   var extension = (fileInput && fileInput.name) ? fileInput.name.split('.').pop() : "";
   if (!extension) {
-    alert("Can't recognize the video");
+    alert("Can't recognize the video type");
   }
 
   // remove old content first
@@ -44,26 +45,63 @@ var playVideo = (fileInput) => {
 
   var reader = new FileReader();  
   reader.onload = (event) => {
-    // hide front elements
-    if (!$('#fileInput').hasClass('nodisp')) {
-      $('#fileInput').addClass('nodisp');
-      $('#labelContainer').addClass('nodisp');
-    }
-
     // insert new content
     var videoPlayer = `
-      <video id='videoPlayer' autoplay='true' height='100%' width='100%' 
-             src='${fileInput.path}' controls volume=0.75
-             type='video/${extension}'>
+      <div id='videoClose' class='nodisp fi-x'></div>
+      <video id='videoPlayer' autoplay controls height='100%' width='100%'
+             src='${fileInput.path}' type='video/${extension}'>
         <p>Your browser doesn't support HTML5</p>
       </video>
       `;
     
     $('#videoContainer').append(videoPlayer);
-    $('video').prop('volume', 0.5)
+
+    var video = document.getElementById('videoPlayer');
+    if (video.canPlayType('video/' + extension)) {
+      initVideoPlayer();
+    } else {
+      alert("Can't play this video type!");
+      removeVideo();
+    }
   }
 
   reader.readAsDataURL(fileInput);
+}
+
+var initVideoPlayer = () => {
+  // hide front elements
+  if (!$('#fileInput').hasClass('nodisp')) {
+    $('#fileInput').addClass('nodisp');
+    $('#labelContainer').addClass('nodisp');
+  }
+
+  $('#videoPlayer').prop('volume', 0.75);
+
+  $('#pageContainer')
+    .mouseenter(() => {
+      $('#videoClose').removeClass('nodisp');
+    })
+    .mouseleave(() => {
+      $('#videoClose').addClass('nodisp');
+    });
+  
+  $('#videoClose').click((evt) => {
+    var video = document.getElementById('videoPlayer');
+    video.pause();
+
+    this.removeVideo();
+    console.log('close clicked!');
+  });
+}
+
+var removeVideo = () => {
+  if ($('#fileInput').hasClass('nodisp')) {
+    $('#fileInput').removeClass('nodisp');
+    $('#labelContainer').removeClass('nodisp');
+  }
+  
+  $('#videoPlayer').removeAttr('controls');
+  $('#videoContainer').empty();
 }
 
 $(document).on('change', '#fileInput', (event) => {

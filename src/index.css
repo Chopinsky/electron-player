@@ -42,6 +42,24 @@ video {
   text-align: left;
 }
 
+#videoClose {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+#videoPlayer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 9;
+}
+
 #labelContainer {
   position: absolute;
   top: 50%;
