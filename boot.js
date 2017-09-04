@@ -27,8 +27,8 @@ const createWindow = () => {
     "slashes": true
   }));
 
-  mainWindow.webContents.openDevTools();
-  // mainWindow.setMenu(null);
+  // mainWindow.webContents.openDevTools();
+  mainWindow.setMenu(null);
 
   mainWindow.on('resize', () => {
     let { width, height } = mainWindow.getBounds();

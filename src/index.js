@@ -24,12 +24,46 @@ var fileCheck = (fileInput) => {
   } else if (!fileInput.size || ~~fileInput.size === 0) {
     alert("Can't open empty file.");
     return false;
-  } else if (~~fileInput.size > FILE_SIZE_LIMIT) {
-    alert("File is too large.");
-    return false;
   }
+  // } else if (~~fileInput.size > FILE_SIZE_LIMIT) {
+  //   alert("File is too large.");
+  //   return false;
+  // }
 
   return true;
+}
+
+var playVideo = (fileInput) => {
+  var extension = (fileInput && fileInput.name) ? fileInput.name.split('.').pop() : "";
+  if (!extension) {
+    alert("Can't recognize the video");
+  }
+
+  // remove old content first
+  $('#videoContainer').empty();
+
+  var reader = new FileReader();  
+  reader.onload = (event) => {
+    // hide front elements
+    if (!$('#fileInput').hasClass('nodisp')) {
+      $('#fileInput').addClass('nodisp');
+      $('#labelContainer').addClass('nodisp');
+    }
+
+    // insert new content
+    var videoPlayer = `
+      <video id='videoPlayer' autoplay='true' height='100%' width='100%' 
+             src='${fileInput.path}' controls volume=0.75
+             type='video/${extension}'>
+        <p>Your browser doesn't support HTML5</p>
+      </video>
+      `;
+    
+    $('#videoContainer').append(videoPlayer);
+    $('video').prop('volume', 0.5)
+  }
+
+  reader.readAsDataURL(fileInput);
 }
 
 $(document).on('change', '#fileInput', (event) => {
@@ -41,7 +75,7 @@ $(document).on('change', '#fileInput', (event) => {
     return;
   }
 
-  var reader = new FileReader();
+  playVideo(fileInput);
 });
 
 $(document).on('dragover', '#pageContainer', (event) => {
@@ -76,6 +110,5 @@ $(document).on('drop', '#pageContainer', (event) => {
     return;
   }
 
-  console.log(fileInput.path);
-  var reader = new FileReader();
+  playVideo(fileInput);
 });
