@@ -21,12 +21,11 @@ const createWindow = () => {
     "backgroundColor": config.background || "#585858"
   });
 
-  if (process.env.PROD) {
+  if (process.env.DEBUG) {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadURL(url.format({
-      // "pathname": path.join(__dirname, 'src-v1', 'index.html'),
       "pathname": path.join(__dirname, 'build', 'index.html'),
       "protocol": 'file:',
       "slashes": true

@@ -1,0 +1,36 @@
+.videoClose {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.videoPlayer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 9;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.videoContainer {
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #323A45;
+  color: #eee;
+  font-family: "Oswald", sansSerif;
+  overflow: hidden;
+}
+
+.nodisp {
+  display: none !important;
+}

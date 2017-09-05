@@ -1,0 +1,13 @@
+{
+  "short_name": "Electron-Video-Player",
+  "name": "HTML5 based electron video player",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone"
+}

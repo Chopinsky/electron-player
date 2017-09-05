@@ -1,0 +1,65 @@
+.mainController {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: 2px dotted grey;
+  background-color: #323A45;
+  color: #eee;
+  font-family: "Oswald", sansSerif;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 20px;
+}
+
+.onDragOver {
+  opacity: 0.75;
+  background-color: #2F4460;
+}
+
+.fileInputIcon {
+  border-bottom-width: 10px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(26, 105, 94, 0.7969);
+  background-color: rgba(31, 187, 166, 0.75);
+  box-shadow: 0 10px 5px rgba(27, 39, 35, 0.39);
+  font-size: 60px;
+  padding: 20px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.fileInputIcon:hover {
+  background-color: rgba(31, 187, 166, 0.9);
+}
+
+.labelContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -135px;
+  margin-left: -25px;
+}
+
+.labelDnD {
+  display: inline-block;
+  margin-left: -30px;
+}
+
+.labelClick {
+  display: inline-block;
+  margin-top: 0px;
+  margin-left: -80px;
+  padding-bottom: 10px;
+}
+
+.fileInput {
+  width: 0;
+  outline-width: 0;
+  display: none;
+}
+
+input[type=file] {
+  display: none;
+}
