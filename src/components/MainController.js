@@ -13,22 +13,6 @@ const fileCheck = (fileInput) => {
   return true;
 }
 
-const peekObject = (object) => {
-  if (!object) {
-    return;
-  }
-
-  var str = object.toString() + '\n';
-  for (var prop in object) {
-    var content =  !!object[prop] ? object[prop].toString() : 'null';
-    if (!!prop) {
-      str += `${prop} (${typeof object[prop]}): ${content} \n`;
-    }
-  }
-
-  return str;
-}
-
 class MainController extends Component {
   constructor(props) {
     super(props);
@@ -91,22 +75,21 @@ class MainController extends Component {
 
   render() {
     return (
-      <div id='mainController' 
-           className={'mainController' + this.state.dragOverClass}
-           onDragOver={this.onDragOver}
-           onDragLeave={this.onDragLeave}
-           onDrop={this.onDrop}
-      >
-        <input id='fileInput' className='fileInput' name='fileInput' 
-               onChange={this.onFileSelected} type='file' />
-        <div className='labelContainer'>
-          <h2 className='labelDnD'>Drag and drop</h2>
-          <br />
-          <h2 className='labelClick'>Or select a video to play</h2>
-          <br />
-          <label id='fileInputIcon' htmlFor='fileInput' className='fileInputIcon' title='Open file'>
-            <i className='fi-upload'></i>
-          </label>
+      <div id='mainController' className='mainController'>
+        <div id='mainContainer' className={'mainContainer' + this.state.dragOverClass}
+          onDragOver={this.onDragOver}
+          onDragLeave={this.onDragLeave}
+          onDrop={this.onDrop}
+        >
+          <input id='fileInput' className='fileInput' name='fileInput' 
+                 onChange={this.onFileSelected} type='file' />
+          <div className='labelContainer'>
+            <h2 className='labelDnD'>Drag and drop</h2><br />
+            <h2 className='labelClick'>Or select a video to play</h2><br />
+            <label id='fileInputIcon' htmlFor='fileInput' className='fileInputIcon' title='Open file'>
+              <i className='fi-upload'></i>
+            </label>
+          </div>
         </div>
       </div>
     );
