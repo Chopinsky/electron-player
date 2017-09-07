@@ -17,6 +17,7 @@ class VideoPlayer extends Component {
     this.clickHandler = this.clickHandler.bind(this);
     this.dragOverHandler = this.dragOverHandler.bind(this);
     this.dropHandler = this.dropHandler.bind(this);
+    this.playErrorHandler = this.playErrorHandler.bind(this);
   }
 
   componentWillUnmount() {
@@ -38,23 +39,33 @@ class VideoPlayer extends Component {
 
   componentDidMount() {
     this._player = document.getElementById("videoPlayer");
-    this._player.addEventListener('canplay', () => {
+
+    this._player.addEventListener('canplay', () => {  
+      if (~~this._player.duration === 0) {
+        this.playErrorHandler();
+        return;
+      }
+
       this.playVideo();
     });
   }
 
-  playVideo() {    
+  playVideo() {
     const playPromise = this._player.play();
     if (!!playPromise) {
       playPromise.then(() => {
         this.setState({ 'isPlaying': true });
       }).catch((err) => {
-        alert(`Video file is broken and can't be played!`);
-        this.setState({ 'isPlaying': false });
-        if (typeof this.props.onVideoPlayFailed === 'function') {
-          this.props.onVideoPlayFailed();
-        }
+        this.playErrorHandler();
       });
+    }
+  }
+
+  playErrorHandler() {
+    alert(`Video file is broken and can't be played!`);
+    this.setState({ 'isPlaying': false });
+    if (typeof this.props.onVideoPlayFailed === 'function') {
+      this.props.onVideoPlayFailed();
     }
   }
 
@@ -122,8 +133,9 @@ class VideoPlayer extends Component {
         <div id='videoClose' style={{ 'display': this.state.closeIconDisplay }}
              onClick={this.props.closeVideo}
              className='videoClose fi-x' />
-        <video id='videoPlayer' controls autoPlay className='videoPlayer'
-               onClick={this.clickHandler}
+        <video id='videoPlayer' controls className='videoPlayer'
+               onClick={this.clickHandler} onError={this.playErrorHandler} 
+               onAbort={this.playErrorHandler}
                src={this.props.source.path} type={this.state.videoType}>
           <p>Your browser doesn't support HTML5</p>
         </video>
