@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import { fileCheck } from '../service/util';
 import './MainController.css';
 
-const fileCheck = (fileInput) => {
-  if (!fileInput || !fileInput.path) {
-    alert(`Fail to read the file, try again.`);
-    return false;
-  } else if (!fileInput.size || ~~fileInput.size === 0) {
-    alert(`Can't open empty file.`);
-    return false;
-  }
+// const fileCheck = (fileInput) => {
+//   if (!fileInput || !fileInput.path) {
+//     alert(`Fail to read the file, try again.`);
+//     return false;
+//   } else if (!fileInput.size || ~~fileInput.size === 0) {
+//     alert(`Can't open empty file.`);
+//     return false;
+//   }
 
-  return true;
-}
+//   return true;
+// }
 
 class MainController extends Component {
   constructor(props) {

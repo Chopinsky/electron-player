@@ -47,8 +47,10 @@ class App extends Component {
         { 
           this.state.videoSource ?
             <VideoPlayer source={this.state.videoSource} 
-                         extension={this.state.extension} 
-                         closeVideo={this.closeVideoHandler} /> :
+                         extension={this.state.videoExtension} 
+                         closeVideo={this.closeVideoHandler} 
+                         onVideoPlayFailed={this.closeVideoHandler}
+                         onVideoDropped={this.onVideoSelected} /> :
             <MainController onVideoSelected={this.onVideoSelected} />
         }
       </div>

@@ -25,6 +25,7 @@ const createWindow = () => {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
   } else {
+    mainWindow.webContents.openDevTools();
     mainWindow.loadURL(url.format({
       "pathname": path.join(__dirname, 'build', 'index.html'),
       "protocol": 'file:',
