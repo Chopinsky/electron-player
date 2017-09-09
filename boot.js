@@ -1,6 +1,8 @@
 const path = require('path');
+const fs = require('fs');
 const url = require('url');
 const electron = require('electron');
+const ipcMain = electron.ipcMain;
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -27,8 +29,9 @@ const createWindow = () => {
   } else {
     mainWindow.webContents.openDevTools();
     mainWindow.loadURL(url.format({
-      "pathname": path.join(__dirname, 'build', 'index.html'),
-      "protocol": 'file:',
+      // "pathname": path.join(__dirname, 'build', 'index.html'),
+      "pathname": path.join(__dirname, 'dist', 'index.html'),
+      "protocol": 'file',
       "slashes": true
     }));
   }
@@ -48,6 +51,11 @@ const createWindow = () => {
 };
 
 app.on('ready', createWindow);
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg);
+  event.sender.send('asynchronous-reply', 'pong');
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

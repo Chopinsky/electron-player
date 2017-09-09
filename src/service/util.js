@@ -26,6 +26,7 @@ exports.peekObject = (object) => {
           output += `  ${prop} (${typeof object[prop]}): ${object[prop].toString()}`
         }  
       }
+      break;
     default:
       output = object.toString();
       break;

@@ -4,6 +4,8 @@ import './App.css';
 import MainController from './MainController';
 import VideoPlayer from './VideoPlayer';
 
+import { ipcRenderer } from 'electron';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,13 @@ class App extends Component {
 
     this.onVideoSelected = this.onVideoSelected.bind(this);
     this.closeVideoHandler = this.closeVideoHandler.bind(this);
+
+    // console.log(ipcRenderer.sendSync('synchronous-message', 'ping')); // prints "pong"
+    ipcRenderer.on('asynchronous-reply', function(event, arg) {
+      console.log(arg); // prints "pong"
+    });
+    
+    ipcRenderer.send('asynchronous-message', 'ping');
   }
 
   onVideoSelected(fileInput) {
