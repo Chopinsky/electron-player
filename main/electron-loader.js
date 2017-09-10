@@ -9,7 +9,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 // import config file
 //const config = store.parseDataFile('./config/app.config');
-const config = { 'width': 1024, 'height': 768 }
+const config = { 'width': 1024, 'height': 768 };
 
 // save off global reference to the main window
 let mainWindow;
@@ -49,8 +49,14 @@ const createWindow = (contentPath) => {
   });
 };
 
-module.exports = (contentPath) => {
+const ipcHandler = (event, arg) => {
+  console.log(arg);
+  setTimeout((event) => {
+    event.sender.send('asynchronous-reply', 'pong');
+  }, 1000, event);
+};
 
+module.exports = (contentPath) => {
   if (!contentPath || !fs.existsSync(contentPath)) {
     console.log('Failed to load the content... exiting...');
     return;
@@ -58,22 +64,18 @@ module.exports = (contentPath) => {
 
   app.on('ready', () => createWindow(contentPath));
   
-  ipcMain.on('asynchronous-message', (event, arg) => {
-    console.log(arg);
-    setTimeout((event) => {
-      event.sender.send('asynchronous-reply', 'pong');
-    }, 1000, event);
-  });
+  // creating IPC communication
+  ipcMain.on('asynchronous-message', (event, arg) => ipcHandler(event, arg));
   
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
       app.quit();
     }
   });
+  
+  app.on('activate', () => {
+    if (mainWindow === null) {
+      createWindow();
+    }
+  });
 }
-
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
