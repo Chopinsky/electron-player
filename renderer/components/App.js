@@ -21,8 +21,11 @@ class App extends Component {
     // console.log(ipcRenderer.sendSync('synchronous-message', 'ping')); // prints "pong"
     ipcRenderer.on('asynchronous-reply', function(event, arg) {
       console.log(arg); // prints "pong"
+      setTimeout(() => {
+        ipcRenderer.send('asynchronous-message', 'ping');    
+      }, 1000);
     });
-    
+
     ipcRenderer.send('asynchronous-message', 'ping');
   }
 
