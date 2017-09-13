@@ -1,4 +1,5 @@
-const loader = require('./main/electron-loader');
-const path = require('path');
+// load boot scripts
+const boot = require('./main/electron-loader');
 
-loader(path.join(__dirname, 'dist', 'index.html'));
+// run the app
+boot();

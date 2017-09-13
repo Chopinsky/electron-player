@@ -2,22 +2,33 @@ const path = require('path');
 const fs = require('fs');
 const url = require('url');
 const electron = require('electron');
-const ipcMain = electron.ipcMain;
+const store = require('./storeUtil');
 
 const app = electron.app;
+const ipcMain = electron.ipcMain;
 const BrowserWindow = electron.BrowserWindow;
 
 // import config file
-//const config = store.parseDataFile('./config/app.config');
-const config = { 'width': 1024, 'height': 768 };
+const config = store.loadConfig();
+const userConfig = store.loadUserConfig();
 
 // save off global reference to the main window
 let mainWindow;
 
 const createWindow = (contentPath) => {
+  let windowWidth, windowHeight;
+
+  if (userConfig.alwaysUseDefaultSize) {
+    windowWidth = userConfig.width || config.width;
+    windowHeight = userConfig.height || config.height;
+  } else {
+    windowWidth = config.width;
+    windowHeight = config.height;
+  }
+
   mainWindow = new BrowserWindow({
-    "width": config.width || 1024,
-    "height": config.height || 768,
+    "width": windowWidth || 1024,
+    "height": windowHeight || 768,
     "mini-width": 360,
     "mini-height": 240,
     "backgroundColor": config.background || "#585858"
@@ -27,9 +38,8 @@ const createWindow = (contentPath) => {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.webContents.openDevTools();
     mainWindow.loadURL(url.format({
-      "pathname": contentPath, //path.join(__dirname, 'dist', 'index.html'),
+      "pathname": contentPath,
       "protocol": 'file',
       "slashes": true
     }));
@@ -44,7 +54,7 @@ const createWindow = (contentPath) => {
   });
 
   mainWindow.on('closed', () => {
-    //store.saveToDataFile(config, path.join(__dirname, 'config/', 'app.config'));
+    store.saveConfig(config);
     mainWindow = null;
   });
 };
@@ -56,8 +66,9 @@ const ipcHandler = (event, arg) => {
   }, 1000, event);
 };
 
-module.exports = (contentPath) => {
-  if (!contentPath || !fs.existsSync(contentPath)) {
+module.exports = () => {
+  const contentPath = path.join(__dirname, '../dist/index.html');
+  if (!fs.existsSync(contentPath)) {
     console.log('Failed to load the content... exiting...');
     return;
   }

@@ -1,24 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const configPath = path.join(__dirname, 'config', 'app-config.json');
 
-exports.loadConfig = () => {
-  let config, content;
+const configPath = path.join(__dirname, '../config/app-config.json');
+const userConfigPath = path.join(__dirname, '../config/user-config.json');  
 
-  try {
-    if (fs.existsSync(path)) {
-      content = fs.readFileSync(configPath, 'utf8');
-    }
+exports.loadConfig = () => loadFromFile(configPath);
 
-    if (content) {
-      config = JSON.parse(content);
-    }
-  } catch (error) {
-    throw error;
-  } finally {
-    return config;
-  }
-}
+exports.loadUserConfig = () => loadFromFile(userConfigPath);
 
 exports.saveConfig = (config) => {
   const content = JSON.stringify(config);
@@ -40,6 +28,19 @@ exports.saveConfig = (config) => {
   }
 }
 
-const parseDataFile = (filePath) => {
+const loadFromFile = (configPath) => {
+  let content, config;
+  try {
+    if (fs.existsSync(configPath)) {
+      content = fs.readFileSync(configPath);
+    }
 
+    if (content) {
+      config = JSON.parse(content);
+    }
+  } catch (error) {
+    throw error;
+  } finally {  
+    return config || {};
+  }
 }
