@@ -13,12 +13,9 @@
     "url": "https://github.com/Chopinsky/electron-player.git"
   },
   "scripts": {
-    "build-app": "webpack",
-    "run-app": "webpack && electron .",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "build": "webpack",
+    "start": "webpack && electron .",
+    "dev": "webpack-dev-server",
     "electron": "electron ."
   },
   "dependencies": {

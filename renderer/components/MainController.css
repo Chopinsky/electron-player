@@ -42,7 +42,7 @@
 
 .labelContainer {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   margin-top: -135px;
   margin-left: -25px;
@@ -68,4 +68,26 @@
 
 input[type=file] {
   display: none;
+}
+
+.labelField {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  margin-top: -135px;
+  margin-left: -25px;
+}
+
+.labelLink {
+  display: inline-block;
+  margin-left: -85px;
+}
+
+.linkInput {
+  color: grey;
+  width: 300px;
+  margin-left: -100px;
+  margin-top: 5px;
+  height: 35px;
+  padding: 0 5px;
 }

@@ -79,6 +79,10 @@ class MainController extends Component {
               <i className='fi-upload'></i>
             </label>
           </div>
+          <div className='labelField'>
+            <h2 className='labelLink'>Or enter link to the video</h2><br />
+            <input id='linkInput' name='linkInput' className='linkInput' type='text' />
+          </div>
         </div>
       </div>
     );

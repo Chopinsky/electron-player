@@ -38,6 +38,7 @@ const createWindow = (contentPath) => {
     mainWindow.loadURL('http://localhost:3000');
     mainWindow.webContents.openDevTools();
   } else {
+    mainWindow.webContents.openDevTools();
     mainWindow.loadURL(url.format({
       "pathname": contentPath,
       "protocol": 'file',
@@ -61,9 +62,9 @@ const createWindow = (contentPath) => {
 
 const ipcHandler = (event, arg) => {
   console.log(arg);
-  setTimeout((event) => {
-    event.sender.send('asynchronous-reply', 'pong');
-  }, 1000, event);
+  // setTimeout((event) => {
+  //   event.sender.send('asynchronous-reply', 'pong');
+  // }, 1000, event);
 };
 
 module.exports = () => {

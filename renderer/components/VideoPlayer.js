@@ -136,8 +136,10 @@ class VideoPlayer extends Component {
         <video id='videoPlayer' controls className='videoPlayer'
                onClick={this.clickHandler} onError={this.playErrorHandler} 
                onAbort={this.playErrorHandler}
-               src={this.props.source.path} type={this.state.videoType}>
+        >
           <p>Your browser doesn't support HTML5</p>
+          <source src={this.props.source.path} type={this.state.videoType} />
+          <track label={this.props.subLang} src={this.props.subtitle} kind="subtitles" default />
         </video>
       </div>
     );
