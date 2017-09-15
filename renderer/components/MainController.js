@@ -75,7 +75,9 @@ class MainController extends Component {
       return;
     }
 
-    console.log(event);
+    if (typeof this.props.onVideoSelected === 'function') {
+      this.props.onVideoSelected(event.target.value);
+    }
   }
 
   onInputKeyUp(event) {
