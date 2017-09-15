@@ -7,13 +7,17 @@ class MainController extends Component {
     super(props);
 
     this.state = {
-      'dragOverClass': ''
+      'dragOverClass': '',
+      'fieldIsEmpty': true
     };
 
     this.onFileSelected = this.onFileSelected.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
     this.onDragLeave = this.onDragLeave.bind(this);
     this.onDrop = this.onDrop.bind(this);
+    this.onBtnClickHanlder = this.onBtnClickHanlder.bind(this);
+    this.onInputKeyUp = this.onInputKeyUp.bind(this);
+    this.onClearFieldHandler = this.onClearFieldHandler.bind(this);
   }
 
   onFileSelected(event) {
@@ -62,6 +66,53 @@ class MainController extends Component {
     }
   }
 
+  onBtnClickHanlder(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (this.state.fieldIsEmpty) {
+      // don't act if input field is empty
+      return;
+    }
+
+    console.log(event);
+  }
+
+  onInputKeyUp(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const emptyInput = !event.target.value;
+    if (this.state.fieldIsEmpty !== emptyInput) {
+      this.setState({
+        'fieldIsEmpty': emptyInput
+      });
+    }
+
+    if (event.keyCode == 13) {
+      if (typeof this.props.onVideoSelected === 'function') {
+        this.props.onVideoSelected(event.target.value);
+      }
+    }
+  }
+
+  onClearFieldHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (!this.state.fieldIsEmpty) {
+      document.getElementById('linkInput').value = '';
+      this.setState({ 'fieldIsEmpty': true });
+    }
+  }
+
+  playBtnClass() {
+    const defaultClasses = 'btn btn-block btn-success playButton ';
+    const controlClass = this.state.fieldIsEmpty ? 'disabled' : 'active';
+    console.log(defaultClasses + controlClass);
+    return defaultClasses + controlClass;
+  }
+
   render() {
     return (
       <div id='mainController' className='mainController'>
@@ -80,8 +131,15 @@ class MainController extends Component {
             </label>
           </div>
           <div className='labelField'>
-            <h2 className='labelLink'>Or enter link to the video</h2><br />
-            <input id='linkInput' name='linkInput' className='linkInput' type='text' />
+            <h2 className='labelLink'>Or enter a link to the video</h2><br />
+            <form className="linkForm">
+              <input id='linkInput' className='form-control linkInput' name='linkInput' type='text'
+                     onKeyUp={this.onInputKeyUp}/>
+              <span className='fi-x closeIcon' onClick={this.onClearFieldHandler}></span>
+              <button onClick={this.onBtnClickHanlder} className={this.playBtnClass()}>
+                <span className='glyphicon glyphicon-play'></span> Play Link
+              </button>
+            </form>
           </div>
         </div>
       </div>

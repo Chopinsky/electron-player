@@ -80,14 +80,33 @@ input[type=file] {
 
 .labelLink {
   display: inline-block;
-  margin-left: -85px;
+  margin-left: -95px;
 }
 
 .linkInput {
   color: grey;
+  height: 35px;
+  padding: 0 22px 0 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: medium;
+}
+
+.linkForm {
   width: 300px;
   margin-left: -100px;
   margin-top: 5px;
-  height: 35px;
-  padding: 0 5px;
+}
+
+.playButton {
+  margin-top: 10px;
+  height: 40px;
+  font-size: large;
+}
+
+.closeIcon {
+  position: absolute;
+  display: inline-flex;
+  margin-top: -23px;
+  right: 8px;
+  cursor: pointer;
 }
