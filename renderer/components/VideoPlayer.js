@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { fileCheck } from '../service/util';
-import './VideoPlayer.css';
+import React, { Component } from "react";
+import { fileCheck } from "../service/util";
+import "./VideoPlayer.css";
 
 class VideoPlayer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      'videoType': 'video/' + this.props.extension,
-      'closeIconDisplay': 'none',
-      'isPlaying': false
+      "videoType": "video/" + this.props.extension,
+      "closeIconDisplay": "none",
+      "isPlaying": false
     };
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
@@ -24,15 +24,15 @@ class VideoPlayer extends Component {
     if (this._player) {
       this._player.pause();
       this._player.removeAttribute("controls");
-      this.setState({ 'isPlaying': false });
+      this.setState({ "isPlaying": false });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.source.path !== this.props.source.path) {      
       this.setState({
-        'videoType': 'video/' + nextProps.extension,
-        'isPlaying': false
+        "videoType": "video/" + nextProps.extension,
+        "isPlaying": false
       });
     }
   }
@@ -40,7 +40,7 @@ class VideoPlayer extends Component {
   componentDidMount() {
     this._player = document.getElementById("videoPlayer");
 
-    this._player.addEventListener('canplay', () => {  
+    this._player.addEventListener("canplay", () => {  
       if (~~this._player.duration === 0) {
         this.playErrorHandler();
         return;
@@ -54,7 +54,7 @@ class VideoPlayer extends Component {
     const playPromise = this._player.play();
     if (!!playPromise) {
       playPromise.then(() => {
-        this.setState({ 'isPlaying': true });
+        this.setState({ "isPlaying": true });
       }).catch((err) => {
         this.playErrorHandler();
       });
@@ -62,19 +62,19 @@ class VideoPlayer extends Component {
   }
 
   playErrorHandler() {
-    alert(`Video file is broken and can't be played!`);
-    this.setState({ 'isPlaying': false });
-    if (typeof this.props.onVideoPlayFailed === 'function') {
+    alert(`Video file is broken and can"t be played!`);
+    this.setState({ "isPlaying": false });
+    if (typeof this.props.onVideoPlayFailed === "function") {
       this.props.onVideoPlayFailed();
     }
   }
 
   onMouseEnter(event) {
-    this.setState({ 'closeIconDisplay': 'inline-block' });
+    this.setState({ "closeIconDisplay": "inline-block" });
   }
 
   onMouseLeave(event) {
-    this.setState({ 'closeIconDisplay': 'none' });
+    this.setState({ "closeIconDisplay": "none" });
   }
 
   clickHandler(event) {
@@ -86,11 +86,11 @@ class VideoPlayer extends Component {
       if (this._player.paused) {
         this.playVideo();
       } else {
-        this.setState({ 'isPlaying': false });
+        this.setState({ "isPlaying": false });
         this._player.pause();
       }      
     } catch (error) {
-      if (typeof this.props.onVideoPlayFailed === 'function') {
+      if (typeof this.props.onVideoPlayFailed === "function") {
         this.props.onVideoPlayFailed();
       }      
     }
@@ -100,7 +100,7 @@ class VideoPlayer extends Component {
     event.stopPropagation();
     event.preventDefault();
 
-    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    event.dataTransfer.dropEffect = "copy"; // Explicitly show this is a copy.
   }    
 
   dropHandler(event) {
@@ -112,7 +112,7 @@ class VideoPlayer extends Component {
       return;
     }
     
-    if (typeof this.props.onVideoDropped === 'function') {
+    if (typeof this.props.onVideoDropped === "function") {
       this.props.onVideoDropped(fileInput);
     }
   }
@@ -125,19 +125,19 @@ class VideoPlayer extends Component {
            onDragOver={this.dragOverHandler}
            onDrop={this.dropHandler}
       >
-        <div id='videoPlay' className='videoPlay' onClick={this.clickHandler}
-             style={{ 'display': this.state.isPlaying ? 'none' : 'inline-block' }}
+        <div id="videoPlay" className="videoPlay" onClick={this.clickHandler}
+             style={{ "display": this.state.isPlaying ? "none" : "inline-block" }}
         >
-          <i className='fi-play'></i>
+          <i className="fi-play"></i>
         </div>
-        <div id='videoClose' style={{ 'display': this.state.closeIconDisplay }}
+        <div id="videoClose" style={{ "display": this.state.closeIconDisplay }}
              onClick={this.props.closeVideo}
-             className='videoClose fi-x' />
-        <video id='videoPlayer' controls className='videoPlayer'
+             className="videoClose fi-x" />
+        <video id="videoPlayer" controls className="videoPlayer"
                onClick={this.clickHandler} onError={this.playErrorHandler} 
                onAbort={this.playErrorHandler}
         >
-          <p>Your browser doesn't support HTML5</p>
+          <p>Your browser doesn"t support HTML5</p>
           <source src={this.props.source.path} type={this.state.videoType} />
           <track label={this.props.subLang} src={this.props.subtitle} kind="subtitles" default />
         </video>

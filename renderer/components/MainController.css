@@ -105,8 +105,11 @@ input[type=file] {
 
 .closeIcon {
   position: absolute;
-  display: inline-flex;
-  margin-top: -23px;
-  right: 8px;
+  margin-top: -25px;
+  right: 5px;
   cursor: pointer;
+  background: gray;
+  padding: 0 4px;
+  border-radius: 12px;
+  font-size: smaller;
 }

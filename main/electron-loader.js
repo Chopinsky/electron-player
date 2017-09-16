@@ -1,8 +1,8 @@
-const path = require('path');
-const fs = require('fs');
-const url = require('url');
-const electron = require('electron');
-const store = require('./storeUtil');
+const path = require("path");
+const fs = require("fs");
+const url = require("url");
+const electron = require("electron");
+const store = require("./storeUtil");
 
 const app = electron.app;
 const ipcMain = electron.ipcMain;
@@ -35,26 +35,26 @@ const createWindow = (contentPath) => {
   });
 
   if (process.env.DEBUG) {
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL("http://localhost:3000");
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.webContents.openDevTools();
     mainWindow.loadURL(url.format({
       "pathname": contentPath,
-      "protocol": 'file',
+      "protocol": "file",
       "slashes": true
     }));
   }
 
   mainWindow.setMenu(null);
 
-  mainWindow.on('resize', () => {
+  mainWindow.on("resize", () => {
     let { width, height } = mainWindow.getBounds();
     config.width = width;
     config.height = height;
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     store.saveConfig(config);
     mainWindow = null;
   });
@@ -63,29 +63,29 @@ const createWindow = (contentPath) => {
 const ipcHandler = (event, arg) => {
   console.log(arg);
   // setTimeout((event) => {
-  //   event.sender.send('asynchronous-reply', 'pong');
+  //   event.sender.send("asynchronous-reply", "pong");
   // }, 1000, event);
 };
 
 module.exports = () => {
-  const contentPath = path.join(__dirname, '../dist/index.html');
+  const contentPath = path.join(__dirname, "../dist/index.html");
   if (!fs.existsSync(contentPath)) {
-    console.log('Failed to load the content... exiting...');
+    console.log("Failed to load the content... exiting...");
     return;
   }
 
-  app.on('ready', () => createWindow(contentPath));
+  app.on("ready", () => createWindow(contentPath));
   
   // creating IPC communication
-  ipcMain.on('asynchronous-message', (event, arg) => ipcHandler(event, arg));
+  ipcMain.on("asynchronous-message", (event, arg) => ipcHandler(event, arg));
   
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
+  app.on("window-all-closed", () => {
+    if (process.platform !== "darwin") {
       app.quit();
     }
   });
   
-  app.on('activate', () => {
+  app.on("activate", () => {
     if (mainWindow === null) {
       createWindow();
     }
