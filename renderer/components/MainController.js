@@ -31,7 +31,7 @@ class MainController extends Component {
     }
 
     if (typeof this.props.onVideoSelected === "function") {
-      this.props.onVideoSelected(fileInput);
+      this.props.onVideoSelected(fileInput, true);
     }
   }
 
@@ -62,7 +62,7 @@ class MainController extends Component {
     }
     
     if (typeof this.props.onVideoSelected === "function") {
-      this.props.onVideoSelected(fileInput);
+      this.props.onVideoSelected(fileInput, true);
     }
   }
 
@@ -71,12 +71,12 @@ class MainController extends Component {
     event.preventDefault();
 
     if (this.state.fieldIsEmpty) {
-      // don"t act if input field is empty
+      // don't act if input field is empty
       return;
     }
 
     if (typeof this.props.onVideoSelected === "function") {
-      this.props.onVideoSelected(event.target.value);
+      this.props.onVideoSelected(event.target.value, false);
     }
   }
 
@@ -93,7 +93,7 @@ class MainController extends Component {
 
     if (event.keyCode == 13) {
       if (typeof this.props.onVideoSelected === "function") {
-        this.props.onVideoSelected(event.target.value);
+        this.props.onVideoSelected(event.target.value, false);
       }
     }
   }
