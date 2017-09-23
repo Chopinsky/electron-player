@@ -1,0 +1,55 @@
+.msgWrapper {
+  display: flex;
+  align-items: center;
+  max-height: 168px;
+  max-width: 100%;
+  min-height: 48px;
+  border: 1px solid;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 0 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  transform: translate3d(0, 0, 0) rotateZ(0);
+  justify-content: flex-start;
+}
+
+.msgTransition {
+  -webkit-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -moz-transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.msgError {
+  color: #fff;
+  background-color: #f76949;
+  border-color: #f51c18;
+}
+
+.msgBtn {
+  color: #fff;
+  margin-left: 6px 8px;
+  display: inline-block;
+  position: relative;
+  float: right;
+  line-height: 19px;
+  cursor: pointer;
+  padding: 0 15px;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 2px;
+  box-sizing: border-box;
+  user-select: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.msgBtnTransition {
+  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  -moz-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
