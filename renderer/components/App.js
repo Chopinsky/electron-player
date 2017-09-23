@@ -18,13 +18,6 @@ class App extends Component {
 
     this.onVideoSelected = this.onVideoSelected.bind(this);
     this.closeVideoHandler = this.closeVideoHandler.bind(this);
-
-    // ipcRenderer.on("asynchronous-reply", function(event, arg) {
-    //   console.log(arg); // prints "pong"
-    //   setTimeout(() => {
-    //     ipcRenderer.send("asynchronous-message", "ping");    
-    //   }, 1000);
-    // });
   }
 
   onVideoSelected(fileInput, isFromFile) {
@@ -44,9 +37,8 @@ class App extends Component {
     }
 
     const newVidPlay = { "video": fileInput.name, "path": fileInput.path, "timeStamp": new Date().toString() };
-    ipcRenderer.send("asynchronous-message", JSON.stringify(newVidPlay));
-
     const histToStay = this.state.playHistory;
+
     if (histToStay.length > 0) {
       let index = histToStay.findIndex((hist) => 
                       (hist.video === newVidPlay.video) && (hist.path === newVidPlay.path));
@@ -54,9 +46,8 @@ class App extends Component {
       histToStay.splice(index, 1);    
     } 
 
-    this.setState({
-      "playHistory": [newVidPlay, ...histToStay]
-    });
+    ipcRenderer.send("asynchronous-message", JSON.stringify([newVidPlay, ...histToStay]));
+    this.setState({ "playHistory": [newVidPlay, ...histToStay] });
   }
 
   closeVideoHandler() {
