@@ -3,6 +3,7 @@ import "./App.css";
 
 import MainController from "./MainController";
 import VideoPlayer from "./VideoPlayer";
+import Message from "./Message";
 
 import { ipcRenderer } from "electron";
 
@@ -13,7 +14,8 @@ class App extends Component {
     this.state = {
       "videoSource": "",
       "videoExtension": "",
-      "playHistory": []
+      "playHistory": [],
+      "message": ""
     }
 
     this.onVideoSelected = this.onVideoSelected.bind(this);
@@ -24,7 +26,8 @@ class App extends Component {
     const extension = (fileInput && fileInput.name) ? fileInput.name.split(".").pop() : "";
 
     if (!extension) {
-      alert("Can't recognize the video type");
+      // alert("Can't recognize the video type");
+      this.setState({ "message": "Can't recognize the video type" });
       this.setState({ "videoSource": "" });
       return;
     }
@@ -53,7 +56,8 @@ class App extends Component {
   closeVideoHandler() {
     this.setState({
       "videoSource": "",
-      "videoExtension": ""
+      "videoExtension": "",
+      "message": "Video file is broken and can't be played!"
     });
   }
 
@@ -69,6 +73,7 @@ class App extends Component {
                          onVideoDropped={this.onVideoSelected} /> :
             <MainController onVideoSelected={this.onVideoSelected} />
         }
+        { this.state.message ? <Message message={this.state.message} /> : null }
       </div>
     );
   }

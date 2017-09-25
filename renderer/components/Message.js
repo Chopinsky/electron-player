@@ -5,7 +5,7 @@ class Message extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { "message": null };
+    this.state = { "message": this.props.message };
     
     this.onBtnClicked = this.onBtnClicked.bind(this);
   }
