@@ -54,6 +54,10 @@ const createWindow = (contentPath) => {
     config.height = height;
   });
 
+  mainWindow.webContents.on('will-navigate', e => {
+    e.preventDefault()
+  })
+
   mainWindow.on("closed", () => {
     store.saveConfig(config);
     mainWindow = null;
@@ -62,9 +66,6 @@ const createWindow = (contentPath) => {
 
 const ipcHandler = (event, arg) => {
   config["history"] = JSON.parse(arg);
-  // setTimeout((event) => {
-  //   event.sender.send("asynchronous-reply", "pong");
-  // }, 1000, event);
 };
 
 module.exports = () => {

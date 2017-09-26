@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./Warnings.css";
+import "./Message.css";
 
 class Message extends Component {
   constructor(props) {
@@ -25,8 +25,9 @@ class Message extends Component {
       <div className="msgWrapper msgTransition msgError" 
            style={{ "display": this.state.message ? "inline-block" : "none" }}>
         <span>{this.state.message}</span>
-        <button className="msgBtn msgBtnTransition" onSubmit={this.onBtnClicked}>OK</button>
       </div>
     );
   }
 }
+
+export default Message;

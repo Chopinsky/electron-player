@@ -3,7 +3,7 @@ import "./App.css";
 
 import MainController from "./MainController";
 import VideoPlayer from "./VideoPlayer";
-import Message from "./Message";
+import Message from './Message';
 
 import { ipcRenderer } from "electron";
 
@@ -26,16 +26,20 @@ class App extends Component {
     const extension = (fileInput && fileInput.name) ? fileInput.name.split(".").pop() : "";
 
     if (!extension) {
-      // alert("Can't recognize the video type");
-      this.setState({ "message": "Can't recognize the video type" });
-      this.setState({ "videoSource": "" });
+      alert("Can't recognize the video type");
+      this.setState({ 
+        "videoSource": "",
+        "message": "Can't recognize the video type"
+      });
+
       return;
     }
 
     if (fileInput) {
       this.setState({
         "videoSource": fileInput,
-        "videoExtension": extension
+        "videoExtension": extension,
+        "message": ""
       });
     }
 
@@ -53,17 +57,24 @@ class App extends Component {
     this.setState({ "playHistory": [newVidPlay, ...histToStay] });
   }
 
-  closeVideoHandler() {
+  closeVideoHandler(obj, event, err) {
     this.setState({
       "videoSource": "",
       "videoExtension": "",
-      "message": "Video file is broken and can't be played!"
+      "message": err
     });
+
+    if (err) {
+      setTimeout(() => {
+        this.setState({ "message": "" });
+      }, 2500);
+    }
   }
 
   render() {
     return (
       <div className="pageContainer">
+        <div>
         { 
           this.state.videoSource ?
             <VideoPlayer source={this.state.videoSource} 
@@ -73,7 +84,10 @@ class App extends Component {
                          onVideoDropped={this.onVideoSelected} /> :
             <MainController onVideoSelected={this.onVideoSelected} />
         }
-        { this.state.message ? <Message message={this.state.message} /> : null }
+        </div>
+        <div className="messageContainer">
+          { this.state.message ? <Message message={this.state.message} /> : null }
+        </div>
       </div>
     );
   }

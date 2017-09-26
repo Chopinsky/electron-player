@@ -39,7 +39,7 @@ class MainController extends Component {
     event.stopPropagation();
     event.preventDefault();
 
-    event.dataTransfer.dropEffect = "copy"; // Explicitly show this is a copy.    
+    event.dataTransfer.dropEffect = "Play"; // Explicitly show this is a copy.    
     this.setState({ "dragOverClass": " onDragOver" });
   }
 
@@ -111,7 +111,6 @@ class MainController extends Component {
   playBtnClass() {
     const defaultClasses = "btn btn-block btn-success playButton ";
     const controlClass = this.state.fieldIsEmpty ? "disabled" : "active";
-    console.log(defaultClasses + controlClass);
     return defaultClasses + controlClass;
   }
 
