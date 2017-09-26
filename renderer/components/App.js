@@ -14,9 +14,10 @@ class App extends Component {
     this.state = {
       "videoSource": "",
       "videoExtension": "",
-      "playHistory": [],
       "message": ""
     }
+
+    this.playHistory = [];
 
     this.onVideoSelected = this.onVideoSelected.bind(this);
     this.closeVideoHandler = this.closeVideoHandler.bind(this);
@@ -44,17 +45,24 @@ class App extends Component {
     }
 
     const newVidPlay = { "video": fileInput.name, "path": fileInput.path, "timeStamp": new Date().toString() };
-    const histToStay = this.state.playHistory;
 
-    if (histToStay.length > 0) {
-      let index = histToStay.findIndex((hist) => 
+    if (this.playHistory.length > 0) {
+      const index = this.playHistory.findIndex((hist) => 
                       (hist.video === newVidPlay.video) && (hist.path === newVidPlay.path));
-      index = (index < 0 || index > histToStay.length - 1) ? histToStay.length - 1 : index;
-      histToStay.splice(index, 1);    
-    } 
 
-    ipcRenderer.send("asynchronous-message", JSON.stringify([newVidPlay, ...histToStay]));
-    this.setState({ "playHistory": [newVidPlay, ...histToStay] });
+      if (index >=0 && index < this.playHistory.length) {
+        // if found in the array
+        this.playHistory.splice(index, 1);
+      } else if (this.playHistory.length > 9) {
+        // if 10 history already, remove the oldest 
+        this.playHistory.splice(9, 1);
+      }
+    } 
+    
+    this.playHistory = [newVidPlay, ...this.playHistory];
+    ipcRenderer.send("asynchronous-message", JSON.stringify(this.playHistory));
+
+    console.log(this.playHistory);
   }
 
   closeVideoHandler(obj, event, err) {

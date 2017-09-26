@@ -62,8 +62,6 @@ class VideoPlayer extends Component {
   }
 
   playErrorHandler() {
-    // alert("Video file is broken and can't be played!");
-
     this.setState({ "isPlaying": false });
     if (typeof this.props.onVideoPlayFailed === "function") {
       this.props.onVideoPlayFailed(null, null, "Video file is broken and can't be played!");
@@ -78,7 +76,19 @@ class VideoPlayer extends Component {
     this.setState({ "closeIconDisplay": "none" });
   }
 
+  onCloseClicked(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    if (typeof this.props.closeVideo === "function") {
+      this.props.closeVideo();
+    }
+  }
+
   clickHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    
     if (!this._player) {
       return;
     }
@@ -132,7 +142,7 @@ class VideoPlayer extends Component {
           <i className="fi-play"></i>
         </div>
         <div id="videoClose" style={{ "display": this.state.closeIconDisplay }}
-             onClick={this.props.closeVideo}
+             onClick={this.onCloseClicked}
              className="videoClose fi-x" />
         <video id="videoPlayer" controls className="videoPlayer"
                onClick={this.clickHandler} onError={this.playErrorHandler} 

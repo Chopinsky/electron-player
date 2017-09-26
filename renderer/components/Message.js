@@ -5,12 +5,24 @@ class Message extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { "message": this.props.message };
+    this.state = { 
+      "message": this.props.message,
+      "wrapperClass": "msgWrapper msgFadeIn msgError"
+    };
     
     this.onBtnClicked = this.onBtnClicked.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      "wrapperClass": "msgWrapper msgFadeIn msgError"
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    setTimeout(() => {
+      this.setState({"wrapperClass": "msgWrapper msgError"});
+    }, 500);
   }
 
   onBtnClicked(event) {
@@ -22,7 +34,7 @@ class Message extends Component {
 
   render() {
     return (
-      <div className="msgWrapper msgTransition msgError" 
+      <div className={this.state.wrapperClass}
            style={{ "display": this.state.message ? "inline-block" : "none" }}>
         <span>{this.state.message}</span>
       </div>

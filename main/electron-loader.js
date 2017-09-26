@@ -65,6 +65,7 @@ const createWindow = (contentPath) => {
 };
 
 const ipcHandler = (event, arg) => {
+  console.log(arg);
   config["history"] = JSON.parse(arg);
 };
 
