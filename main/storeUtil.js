@@ -9,6 +9,11 @@ exports.loadConfig = () => loadFromFile(configPath);
 exports.loadUserConfig = () => loadFromFile(userConfigPath);
 
 exports.saveConfig = (config) => {
+  if (!!config.history && config.history.length > 10) {
+    const count = config.history.length - 10;
+    config.history.splice(10, count);
+  }
+
   const content = JSON.stringify(config);
   if (!content) {
     return;

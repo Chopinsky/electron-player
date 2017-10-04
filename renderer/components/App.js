@@ -53,15 +53,16 @@ class App extends Component {
       if (index >=0 && index < this.playHistory.length) {
         // if found in the array
         this.playHistory.splice(index, 1);
-      } else if (this.playHistory.length > 9) {
-        // if 10 history already, remove the oldest 
-        this.playHistory.splice(9, 1);
+        newVidPlay["played"] = true;
+      } else if (this.playHistory.length > 20) {
+        // don't blow up the memeory
+        const count = this.playHistory.length - 20;
+        this.playHistory.splice(20, count);
       }
     } 
     
     this.playHistory = [newVidPlay, ...this.playHistory];
     ipcRenderer.send("asynchronous-message", JSON.stringify(this.playHistory));
-
     console.log(this.playHistory);
   }
 
@@ -73,6 +74,16 @@ class App extends Component {
     });
 
     if (err) {
+      if (!!obj && !!obj.path) {
+        // if play error, don't add it to 
+        const index = this.playHistory.findIndex(video => video.path === obj.path && !video.played);
+        this.playHistory.splice(index, 1);
+
+        // tell main process to update play history
+        ipcRenderer.send("asynchronous-message", JSON.stringify(this.playHistory));
+        console.log(this.playHistory);
+      }
+
       setTimeout(() => {
         this.setState({ "message": "" });
       }, 2500);

@@ -64,7 +64,7 @@ class VideoPlayer extends Component {
   playErrorHandler() {
     this.setState({ "isPlaying": false });
     if (typeof this.props.onVideoPlayFailed === "function") {
-      this.props.onVideoPlayFailed(null, null, "Video file is broken and can't be played!");
+      this.props.onVideoPlayFailed({ "path": this.props.source.path }, null, "Video file is broken and can't be played!");
     }
   }
 
